@@ -989,8 +989,179 @@ STRUCT_T *strp = (STRUCT_T *)malloc(sizeof(STRUCT_T));
 
 ## Recursion
 
+A function contains a call to itself (with other parameters).
+
+There will necessarily be a condition in the function to stop the recursion.
+
 ### Quick Sort
 Tony Hoare
+
+```c
+int place_pivot(int *arr, int elem_count) {
+  int pivot;
+  int tmp;
+  int up = 1;
+  int down = elem_count - 1;
+
+  pivot = arr[0];
+  while (down > up) {
+    while ((arr[up] <= pivot) && (up < down)) {
+      up++;
+    }
+    while ((arr[down] > pivot) && (up < down)) {
+      down--;
+    }
+    if (up < down) {
+      // Exchange values
+      tmp = arr[up];
+      arr[up] = arr[down];
+      arr[down] = tmp;
+    }
+  }
+  // up has stopped at a value > pivot
+  // or when it met the down pointer
+  if (pivot < arr[up]) {
+    // Place pivot at up - 1
+    up--;
+  }
+  arr[0] = arr[up];
+  arr[up] = pivot;
+  return up;
+}
+```
+
+```c
+void quicksort(int *arr, int elem_count) {
+  int limit;
+  int tmp;
+
+  switch (elem_count) {
+    case 0:
+    case 1: // Do nothing
+      break;
+    case 2:
+      if (arr[1] < arr[0]) {
+        tmp = arr[1];
+        arr[1] = arr[0];
+        arr[0] = tmp;
+      }
+      break;
+    default:
+      limit = place_pivot(arr, elem_count);
+      // Now recursion
+      quicksort(arr, limit);
+      quicksort(&(arr[limit+1]),elem_count-limit-1);
+      break;
+  }
+}
+```
+
+**Don't use recursion where loops are easy to write.**
+
+# Lecture 6
+
+## Data Structures
+
+`realloc()`
+
+- It looks like for a free, big enough memory area in the heap that can be assigned to you and reserves it.
+- It then uses the original pointer to copy what was at the old place to the new place, then it frees the old place before returning to your program the address of the new one.
+
+### Sorting
+
+Data is easier to find when ordered.
+
+```c
+// Name becomes mandatory as the compiler reads lines in order.
+struct place {
+  char *place_name;
+  double latitude;
+  double longitude;
+  struct place *next;
+} PLACE_T;
+```
+
+### Linked List
+
+- Easy to add a node at the right place
+- Easy to remove a node
+
+```c
+void insert_place(PLACE_T **head_ptr, PLACE_T *place) {
+  PLACE_T *p;
+  PLACE_T **prev_ptr = NULL;
+  if (head_ptr != NULL) {
+    if ((p = *head_ptr) == NULL) {
+      *head_ptr = place;
+    } else {
+      prev_ptr = head_ptr;
+      while (p &&
+        (strcmp(place->place_name, p->place_name) > 0)) {
+        prev_ptr = &(p->next);
+        p = p->next;
+      }
+      place->next = p;
+      *prev_ptr = place;
+    }
+  }
+}
+```
+
+
+```c
+void insert_place(PLACE_T **head_ptr, PLACE_T *place){
+  if (head_ptr != NULL){
+    if (*head_ptr == NULL){
+      *head_ptr = place;
+    } else{
+      if (strcmp(place->place_name, (*head_ptr)->place_name) > 0)){
+        insert_place(&((*head_ptr)->next), place);
+      } else {
+        place->next = *head_ptr;
+        *head_ptr = place;
+      }
+    }
+  }
+}
+```
+
+```c
+void show_places(PLACE_T *p) {
+  if (p) {
+    printf("%s (%lf, %lf)\n", p->place_name,
+                              p->latitude,
+                              p->longitude);
+  }
+}
+```
+
+```c
+void delete_places(PLACE_T **p_ptr) {
+  if ((p_ptr != NULL) && (*p_ptr != NULL)){
+    delete_places(&((*p_ptr)->next));
+    free((*p_ptr)->place_name);
+    free(*p_ptr);
+    *p_ptr = NULL;
+  }
+}
+```
+
+### Hash Table
+
+- Make storage location dependent on value.
+- Ordering is relative.
+- Make location absolute.
+
+![](midterm/hashtable.png)
+
+### Trees
+
+
+
+
+
+
+
 
 
 
