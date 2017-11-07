@@ -47,6 +47,25 @@ Functions that return a pointer return NULL when they fail or are done.
 ### Dereferencing `*`
 `*` operator
 
+### Pointer arithmetic
+`pointer + n`
+
+Makes the pointer point to the nth element - like array indices.
+
+`p++`
+Increments p by as many bytes as the type p points to.
+
+`*p++`
+Returns the value pointed to by p then increases p (in an assignment).
+
+`(*p)++`
+Increases by one what p points to (COMPLETELY
+DIFFERENT).
+
+![](midterm/pointer.png)
+
+> The main difference between a C array and a Java array is that when you declare a C array there is an implicit memory reserva?on. There is none in Java, which is why a new is required (we'll see shortly the C equivalent). Java only declare a reference, in fact.
+
 ## Data types
 
 Data Type  |  Length (byte)
@@ -169,17 +188,6 @@ for (initialization; condition; increment) {
 }
 ```
 > In tradiJonal C, where usually all variables, even loop variables, are declared at the beginning of a function. Java behaviour is allowed in C99, which borrows it from Java.
-
-## Command Line Parameters
-
-```c
-int main(int argc, char *argv[]) {
-  /*
-  argc is always at least 1,
-  in C the first parameter contains the name of the program
-  */
-}
-```
 
 ## Error management in C
 `int scanf(const char *restrict format, ...);`
@@ -405,7 +413,7 @@ error message
 
 `perror("your message" + strerror(errno));`
 
-## Time functions (the simplest ones)
+## Time functions
 
 `#include <time.h>`
 
@@ -432,6 +440,39 @@ int main() {
 }
 ```
 
+### Struct tm
+Struct tm is defined in time.h and breaks up a date/time into its components..
+```c
+struct tm {
+  int tm_sec;     /* seconds (0 - 60) */
+  int tm_min;     /* minutes (0 - 59) */
+  int tm_hour;    /* hours (0 - 23) */
+  int tm_mday;    /* day of month (1 - 31) */
+  int tm_mon;     /* month of year (0 - 11) */
+  int tm_year;    /* year - 1900 */
+  int tm_wday;    /* day of week (Sunday = 0) */
+  int tm_yday;    /* day of year (0 - 365) */
+  int tm_isdst;   /* is summer time in effect */
+  char *tm_zone;  /* abbreviation of timezone name */
+  long tm_gmtoff; /* offset from UTC in seconds */
+};
+```
+Two functions take a pointer to a time_t (number of seconds to 1/1/1970 at 00:00:00) and return a pointer to a struct tm.
+
+`struct tm *localtime(const time_t *clock);`
+
+`struct tm *gmtime(const time_t *clock);`
+
+\* Returns NULL if error.
+
+Two functions take a pointer to a struct tm and return the corresponding number of seconds since 1/1/1970 at 00:00:00.
+
+`time_t  mktime(struct tm *timeptr);`
+
+`time_t  timegm(struct tm *timeptr);`
+
+\* Returns -1 if error.
+
 ## `random()`
 
 
@@ -454,6 +495,506 @@ int main() {
 `setlocale(LC_ALL, "zh_CN.UTF-8");`
 
 > It affects some time functions (because date formats differ by country), but not ctime().
+
+## Arrays of Strings
+
+`char *simple_string = "A string";`
+
+`char *string_array[] = {"Welcome", "Bienvenidos", "Bienvenue", "Willkommen", "Bemvindos", NULL};`
+
+> If you let the compiler compute the size, you should have a NULL to know where the array stops when you loop.
+
+> Another method is to use function sizeof() to get the size of the array and divide by the size of one element, here a char *
+
+`char **string_array = {"Welcome", "Bienvenidos", "Bienvenue", "Willkommen", "Bemvindos", NULL};`
+
+A multi-dimensional array can also be given explicit sizes:
+
+`double matrix[ROW_COUNT][COL_COUNT]`
+
+## Command line parameters
+
+```c
+int main(int argc, char *argv[]) {
+  /*
+  argc is always at least 1,
+  argv[0] always contains the name of the program
+  */
+}
+```
+
+`getopt()` for managing flags passed to commands
+
+## Structures
+Structures are like objects with only atributes and no methods. Everything is public.
+
+**(nameless) user-defined data type**
+```c
+struct {
+  char place_name[NAME_LEN];
+  double latitude;
+  double longitude;
+} my_place;
+strncpy(my_place.place_name, "Shenzhen", NAME_LEN);
+my_place.latitude = 22.25;
+my_place.longitude = 114.1;
+```
+
+```c
+struct {
+        char   place_name[NAME_LEN];
+        double latitude;
+        double longitude;
+      } my_place = {"Shenzhen",
+                      22.25,
+                      114.1};
+```
+
+### Naming a Structure
+Two ways
+
+```c
+...
+struct my_struct {
+  char place_name[NAME_LEN];
+  double latitude;
+  double longitude;
+};
+/*
+  Declaration is like an instantiation
+  but there is no new here (important)
+*/
+int main() {
+  struct my_struct my_place;
+  ...
+}
+```
+
+```c
+...
+typedef struct my_struct {
+  char place_name[NAME_LEN];
+  double latitude;
+  double longitude;
+} PLACE_T;
+// typedef gives a user-defined name to the structure
+int main(){
+  PLACE_T my_place;
+  ...
+}
+```
+
+`typedef int my_type;` typedef can be used with any data type.
+
+**Structures aren't necessarily "packed".**
+
+> There may be additional (unused) bytes in the structure.
+
+### Alignment
+Depends on architecture (i.e. type of computer).
+
+Some computers want everything to start at even addresses, so there may be "padding"
+
+**Don't rely on pointer arithmetic to point to the various components of a structure.**
+
+### Dereferencing
+
+Use the "arrow notation" with a pointer to a structure.
+
+`ptr->place_name`
+`ptr->latitude`
+`ptr->longitude`
+
+`struct_variable.fieldname`
+
+`pointer_to_struct->fieldname`
+
+## Union `union`
+
+```c
+union {
+  long a_long;
+  int an_int;
+  float a_float;
+} stuff;
+```
+
+In a union, all components are using the same storage in memory. Reserved size is the size of the biggest.
+
+# Lecture 4
+
+## FILES
+
+### Stream redirecEon
+`$ my_program < input_file`
+
+`$ my_program > output_file`
+
+### `FILE` Structure
+
+`#include <stdio.h>`
+
+> A file pointer is a stream exactly like stdin or stdout. In fact, wherever you can use stdin or stdout, you can replace them with a file pointer.
+
+```c
+FILE *fp;
+if ((fp = fopen(file_name, mode)) != NULL) {
+  ...
+  fclose(fp);
+}
+else{
+  perror(file_name);
+  return 1;
+}
+```
+
+#### `mode`
+- `"r"` read
+- `"w"` write
+- `"r+"` read and write
+- `"a"` append
+- `"b"` binary, often no effect
+
+#### Writing to a text file
+`fprintf(fp, "Hello %s\n", name);`
+
+`fputs(message, fp);`
+
+Returns EOF on error, otherwise > 0.
+
+#### Writing/reading any type of file
+`c = fgetc(fp);`
+
+`fputc(c, fp);`
+
+#### Writing to / reading from a binary file
+Dumping memory to a file
+
+`fwrite(ptr, unitary_size, num_elem, fp);`
+
+`fread(ptr, unitary_size, num_elem, fp);`
+
+Return number of elements written/read.
+
+#### ERROR or end of file
+`feof(fp);`
+
+`ferror(fp);`
+
+#### Same-sized structures
+
+Index  |
+--|--
+Record  |
+Record  |
+
+`fseek(fp, offset, origin)`
+
+`origin`
+- `SEEK_SET` from beginning
+- `SEEK_CUR` from current
+- `SEEK_END` from end
+
+### Other File Operations
+
+`unlink()` delete a file
+
+`flock()` check multiple accesses
+
+### Directory Operations
+
+`#include <dirent.h>`
+
+`opendir()`
+open a directory
+
+`readir()`
+read directory entries (struct)
+
+`closedir()`
+close the directory
+
+## Make
+
+![](midterm/make.png)
+
+### Makefile
+
+> When you have long lines, you must terminate them with a backslash `\` followed by NOTHING, not even a space. It indicates that the next line is the continuation of the current one.
+
+```makefile
+CFLAFS = -Wall
+LIBS = -lm
+all: myprog
+myprog: entry.o func.o func2.o
+  (TAB)  gcc -o myprog entry.o func1.o func2.o $(LIBS)
+%.o: %.c
+  (TAB)  gcc ($CFLAGS) -c $< -o $@
+clean: // make clean
+  (TAB)  -rm myprog // Minus sign: if it failes, continue.
+  (TAB)  -rm *.o
+```
+
+
+```c
+...
+myprog: entry.o func.o func2.o
+  (TAB)  gcc -L. -o myprog entry.o -lmine $(LIBS)
+%.o: %.c
+  (TAB)  gcc ($CFLAGS) -c $< -o $@
+libmine.a: func1.o func2.o
+  (TAB)  ar -rs libmine.a func1.o func2.o
+clean: // make clean
+  (TAB)  -rm myprog // Minus sign: if it failes, continue.
+  (TAB)  -rm *.o
+  (TAB)  -rm *.a
+```
+> The additional flag -L is for the linker only, and says to also look into the specified directory for libraries.
+
+
+### Shared Library
+
+Extensions  | Platform
+--|--
+.so  | Linux
+.dll  | Windows
+.dylib  | OS X
+
+## `static` and `extern` functions
+`static` $\approx$ private
+
+`extern` $\approx$ public
+
+- `static` functions in C can only be called by functions in the same `.c` file. They are invisible to the linker, that won't find them.
+- Functions that are declared as `extern` (the default) ARE findable by the linker.
+
+![](midterm/linker.png)
+
+## Stack
+
+von Neumann Architecture  |
+--|--
+Heap |
+Stack |
+Data |
+Code |
+
+Parameters modified in a function don't affect the caller. Only the returned value is known by the caller.
+
+```c
+char *initcap(char *input) {
+  char output[MAX_LEN];
+  int i = 0;
+  char not_after_letter = 1;
+  if (input != NULL) {
+    while (input[i] != '\0') {
+      ...
+      i++;
+    }
+    output[i] = '\0';
+    return output;
+  }
+  return NULL;
+}
+```
+
+4 solutions:
+
+### 1. Transmit pointers
+```c
+void initcap(char *input, char *output) {
+...
+}
+```
+
+`scanf("%d", &my_int);`
+
+### 2. Global variables
+
+> Global variables are reserved for the whole life- span of the program.
+
+```c
+char G_output[MAX_LEN];
+char *initcap(char *input) {
+  ...
+}
+```
+
+#### Drawbacks
+
+1. Side-effects of other functions
+2. Can be "hidden" by a similarly named local variable
+3. Multi-threading (advanced!)
+
+### 3. Static variables
+
+#### `static`
+
+- For variables, it means that they are stored in a memory area that is reserved by the compiler and will be there as long as the program is running. (in `Data`)
+- For variables and functions it also means "private" to the file.
+
+![](midterm/structure.png)
+
+```c
+char *initcap(char *input) {
+  static char output[MAX_LEN];
+  ...
+}
+```
+
+#### Drawbacks
+1. Too many may waste a lot of memory
+2. Multi-threading (advanced!)
+
+
+### 4. Dynamic memory
+
+#### Memory allocation
+
+> Java has a built-in garbage collector that cleans up the mess after you. In C and C++ you must do it yourself.
+
+# Lecture 5
+
+### Four main functions to know
+
+#### `#include <stdlib.h>`
+
+`void * malloc(size_t size);`
+
+Returns start address or NULL.
+
+`void * realloc(void *ptr, size_t size);`
+
+`void free(void *ptr);`
+
+takes a pointer to a memory chunk in the heap and releases it. Note that it doesn't reset the pointer itself; you should do it.
+
+**You can only free memory that you have allocated.**
+
+```c
+free(p);
+p = NULL;
+```
+
+**Memory Leak**
+When you free memory, you mustn't leave cleaning half done.
+
+
+#### `#include <string.h>`
+
+`char*strdup(char*str);`
+
+#### `void *` = address of "something"
+- type unknown
+- size unknown
+- **Must cast!**
+
+```c
+char *initcap(char *input){
+  if ((input != NULL)
+    && (output = (char *)malloc(strlen(input) + 1) != NULL)){
+      ...
+    }
+    ...
+    return output;
+  ...
+  return NULL;
+}
+```
+
+**What is ALLOCATED must be FREED when you no longer need it.**
+
+Managing memory dynamically allows for great flexibility. You are no longer constrained by predefined constants.
+
+```c
+typedef struct matrix {
+  short rows;
+  short cols;
+  double *cells;
+} MATRIX_T;
+
+MATRIX_T *new_matrix(short r, short c) {
+  MATRIX_T *m = NULL;
+  // WARNING: no error checking !
+  m = (MATRIX_T *)malloc(sizeof(MATRIX_T));
+  m->rows = r;
+  m->cols = c;
+  m->cells = (double *)malloc(sizeof(double) * r * c);
+  return m;
+}
+```
+
+```c
+void free_mat(MATRIX_T *m) {
+  if (m) {
+    if (m->cells) {
+      free(m->cells);
+    }
+    free(m);
+  }
+}
+```
+
+By passing a `pointer to a pointer`, you can even reset the pointer in the function.
+```c
+void free_mat(MATRIX_T **mp) {
+  if (mp && *mp) {
+    if ((*mp)->cells) {
+      free((*mp)->cells);
+    }
+    free(*mp);
+    *mp = NULL;
+  }
+}
+```
+
+### Review
+
+1. Whatever you do in a computer, you need to reserve bytes to store your data
+
+    * declaration -> data / stack
+
+    * dynamic allocation -> heap
+
+2. Dynamic allocation requires declaring pointers
+
+```c
+// declaration
+STRUCT_T *strp = NULL;
+// dynamic allocation
+strp = (STRUCT_T *)malloc(sizeof(STRUCT_T));
+```
+
+3. ANYTHING can be declared either way
+
+```c
+// declaration
+int my_int = 0;
+STRUCT_T struct_var;
+// dynamic allocation
+int *intp = (int *)malloc(sizeof(int));
+STRUCT_T *strp = (STRUCT_T *)malloc(sizeof(STRUCT_T));
+```
+
+4. Arrays are memory + pointer
+5. You can mix arrays and pointers
+6. You copy values on the stack when calling funcDons
+    - Simple variable
+    - Full structure
+    - Address (pointer, array)
+7. To modify a parameter, you need to pass its address
+> You can say that a pointer is "const" if the function doesn't modify it.
+
+`int printf(const char *fmt, ...)`
+
+## Recursion
+
+### Quick Sort
+Tony Hoare
+
+
+
+
 
 
 
