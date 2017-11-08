@@ -222,6 +222,8 @@ Two options
 1. Define every function before you call it.
 2. You put at the beginning of the file function prototypes that are just return type, name and parameters (no function body).
 
+See **Lecture 7** for more details.
+
 ```c
 #include
 
@@ -768,6 +770,12 @@ Extensions  | Platform
 - `static` functions in C can only be called by functions in the same `.c` file. They are invisible to the linker, that won't find them.
 - Functions that are declared as `extern` (the default) ARE findable by the linker.
 
+```
+$ nm -a module.o
+$ nm -g module.o
+$
+```
+
 ![](midterm/linker.png)
 
 ## Stack
@@ -1269,6 +1277,220 @@ If the new node brings an imbalance of two levels, then you must **rotate** the 
 Several keys per node, N max.
 
 ![](midterm/btree.png)
+
+## Pointers on Functions
+
+```c
+int (*comp)(void *, void *);
+comp = strcmp;
+int cmp = (*comp)(p1, p2);
+int cmp = comp(p1, p2);
+// The two statements are equivalent
+```
+`(*comp)`
+
+> As a side note, you can define in a structure an aaribute that is a pointer to a function. In fact, you can have many such pointers in a structure, and assign to them the address of existing functions when you initalize your structure.
+
+> At this point, your function pointers are beginning to look a lot like methods ... This is how C became C++ and **object-oriented**, as we shall see later.
+
+## Functions available in C
+
+BSD System
+
+`#include <search.h>`
+
+```c
+typedef struct entry {
+                    char    *key;
+                    void    *data;
+                   } ENTRY;
+```
+
+```c
+int  hcreate(size_t nel);
+void hdestroy(void);
+ENTRY *hsearch(ENTRY item, ACTION action);
+```
+
+> These ENTRY items can be used with hash tables.
+
+```c
+void *tsearch(const void *key, void **rootp,
+               int (*compar) (const void *key1,
+                              const void *key2));
+void twalk(const void *root,
+            void (*action) (const void *node,
+                  VISIT order, int level));
+```
+
+### B-tree functions
+
+```c
+#include <sys/types.h>
+#include <db.h>
+```
+
+### GLib
+
+The open-source GNU library contains many functions for managing data structures.
+
+> It's often easier to write one's own custom functions than to use generic ones.
+
+## Comparing Data Structures
+
+- Arrays
+- Linked Lists
+- Hash Tables
+- Trees
+
+> Think of **in-memory databases** too.
+
+## Organizing Your Code
+
+```c
+#include
+
+#include "func.h"
+
+#define
+
+/*
+  1. Constant value
+  2. "Flag" name to avoid multiple inclusions
+  3. Macros
+*/
+
+#ifndef / #ifdef
+
+#else
+
+#endif
+
+
+code of functions
+
+// Order doesn't matter
+
+main()
+```
+
+```c
+#ifndef MATRICES_H
+#define MATRICES_H // No value required
+typedef struct matrix {
+  short rows;
+  short cols;
+  double *cells;
+} MATRIX_T;
+
+MATRIX_T *new_matrix(int rows, int cols);
+void free_matrix(MATRIX_T *m);
+
+MATRIX_T *matrix_add(MATRIX_T *m1, MATRIX_T *m2);
+MATRIX_T *matrix_scalar(MATRIX_T *m, double lambda);
+MATRIX_T *matrix_mult(MATRIX_T *m1, MATRIX_T *m2);
+MATRIX_T *matrix_inv(MATRIX_T *m);
+double matrix_det(MATRIX_T *m);
+#endif
+```
+
+## Macros
+
+Afer preprocessing, the macro will be simply replaced by it's definition. "parameters" are replaced by the actual values.
+
+```c
+#define _max(a, b) (a > b ? a : b)
+...
+maxval = _max(val1, val2);
+// maxval = (val1 > val2 ? val1 : val2);
+...
+```
+
+> As it's pure text replacement, always enclose your macro between parentheses to avoid unwanted side-effects.
+
+Macros can include blocks between curly brackets and be on several lines.
+```c
+#define _init(some_struct) { \
+  some_struct.a = 0; \
+  some_struct.b = 0; \
+  some_struct.str = ""; }
+```
+
+### Difference between macros and functions
+
+- Macros are just substituTon.
+- No call.
+- No copy of arguments.
+- Operating directly on variables.
+
+## Useful Predefined Variables
+
+### `__FILE__`
+ontains the name of the current .c file.
+
+### `__LINE__`
+the current line number in the file.
+
+## CondiTonal Compiling
+All environments have at least one preprocessor symbol that is only defined in them.
+[Full List](hap://sourceforge.net/p/predef/wiki/OperaTngSystems/)
+
+```c
+#include <stdio.h>
+int main() {
+  #ifdef _WIN32
+    printf("I'm running on Windows\r\n");
+  #endif
+  #ifdef __APPLE__
+    printf("I'm running on a Mac\n");
+  #endif
+  #ifdef __linux__
+    printf("I'm running on Linux\n");
+  #endif
+  return 0;
+}
+```
+
+## The GNU build system
+### "Autotools"
+
+#### Using it
+```
+$ configure
+$ make
+$ make install
+$
+```
+
+#### Preparing it
+Packaging your project is tougher. A tool named "autoscan" analyses the source files and generate a "configure.scan", that you must inspect and possibly modify before renaming it "configure.ac".
+
+`autoscan [<directory>]`
+
+You must also manually prepare a "makefile.in" (for bigger projects you can have a top-level "Makefile.am").
+
+"autoconf" prepares "configure", and "configure" uses makefile.in to
+generate the final Makefile that will buid the program. Other tools such as automake can be used in the process. As you see, simplicity for the end-user is at the expense of complexity for the developer.
+
+Other tools: Cmake
+
+## Global Vriables
+
+Don't use extern variables. Truly global variables are evil.
+
+In C, your static global variables should be limited to variables such as
+- global flags
+- references to collecTons, such as heads of lists or tree roots.
+- file pointers, network sockets, database connecTons, and so forth.
+
+**BEWARE when the code is shared between threads!**
+
+With threads, global variables are usually pointers.
+
+
+
+
+
 
 
 
