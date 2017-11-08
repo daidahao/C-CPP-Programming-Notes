@@ -64,7 +64,7 @@ DIFFERENT).
 
 ![](midterm/pointer.png)
 
-> The main difference between a C array and a Java array is that when you declare a C array there is an implicit memory reserva?on. There is none in Java, which is why a new is required (we'll see shortly the C equivalent). Java only declare a reference, in fact.
+> The main difference between a C array and a Java array is that when you declare a C array there is an implicit memory reservation. There is none in Java, which is why a new is required (we'll see shortly the C equivalent). Java only declare a reference, in fact.
 
 ## Data types
 
