@@ -1083,8 +1083,32 @@ struct place {
 
 ### Linked List
 
+```c
+typedef struct place_list {
+  PLACE_T *first_element;
+  int place_count;
+} PLACE_LIST_T;
+```
+
 - Easy to add a node at the right place
 - Easy to remove a node
+
+```c
+PLACE_T *new_place(char *place_name,
+                    double latitude,
+                    double longitude) {
+  PLACE_T *p = NULL;
+  if (place_name) {
+    if ((p = (PLACE_T *)malloc(sizeof(PLACE_T))) != NULL) {
+      p->place_name = strdup(place_name);
+      p->latitude = latitude;
+      p->longitude = longitude;
+      p->next = NULL;
+    }
+  }
+  return p;
+}
+```
 
 ```c
 void insert_place(PLACE_T **head_ptr, PLACE_T *place) {
@@ -1156,19 +1180,95 @@ void delete_places(PLACE_T **p_ptr) {
 
 ### Trees
 
+Data structures made for recursion.
 
+```c
+typedef struct place {
+  char *place_name;
+  double latitude;
+  double longitude;
+  struct place *left;
+  struct place *right;
+} PLACE_T;
+```
 
+```c
+PLACE_T *new_place(char *place_name,
+                    double latitude,
+                    double longitude) {
+  PLACE_T *p = NULL;
+  if (place_name) {
+    if ((p = (PLACE_T *)malloc(sizeof(PLACE_T))) != NULL) {
+      p->place_name = strdup(place_name);
+      p->latitude = latitude;
+      p->longitude = longitude;
+      p->left = NULL;
+      p->right = NULL;
+    }
+  }
+  return p;
+}
+```
 
+```c
+void insert_place(PLACE_T **root_ptr, PLACE_T *place) {
+  PLACE_T *p = NULL;
+  if (root_ptr != NULL) {
+    if ((p = *root_ptr) == NULL) {
+      *root_ptr = place;
+    } else {
+      if (strcmp(place->place_name, p->place_name) > 0) {
+        insert_place(&(p->right), place);
+      } else {
+        if (strcmp(place->place_name, p->place_name) < 0) {
+          insert_place(&(p->left), place);
+        }
+      }
+    }
+  }
+}
+```
 
+```c
+void show_places(PLACE_T *p) {
+  if (p) {
+    show_places(p->left);
+    printf("%s (%lf, %lf)\n", p->place_name,
+                              p->latitude,
+                              p->longitude);
+    show_places(p->right);
+  }
+}
+```
 
+```c
+void delete_places(PLACE_T **p_ptr){
+  if ((p_ptr != NULL) && (*p_ptr != NULL)){
+    delete_places(&((*p_ptr)->right));
+    delete_places(&((*p_ptr)->left));
+    free((*p_ptr)->place_name)
+    free(*p_ptr);
+    *p_ptr = NULL;
+  }
+}
+```
 
+### AVL Tree
 
+#### Balance Factor
+(Height of left subtree) – (Heigh of right subtree)
 
+-1, 0, 1 are OK.
 
+If the new node brings an imbalance of two levels, then you must **rotate** the tree.
 
+# Lecture 7
 
+### B-Tree
 
+Several keys per node, N max.
 
+![](midterm/btree.png)
 
 
 
