@@ -1480,8 +1480,8 @@ Don't use extern variables. Truly global variables are evil.
 
 In C, your static global variables should be limited to variables such as
 - global flags
-- references to collecTons, such as heads of lists or tree roots.
-- file pointers, network sockets, database connecTons, and so forth.
+- references to collections, such as heads of lists or tree roots.
+- file pointers, network sockets, database connections, and so forth.
 
 **BEWARE when the code is shared between threads!**
 
