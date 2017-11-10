@@ -311,7 +311,7 @@ It contains functions (and macros) to test characters.
 #include <string.h>
 ```
 
-`int strlen(char *string);` Starts from the pointer passed and moves on, counJng chars unJl one encounters \0.
+`int strlen(char *string);` Starts from the pointer passed and moves on, counting chars until one encounters \0.
 
 #### Unsafe basic copy/concat functions
 `char *strcpy (char *dest, char *src)`
@@ -1431,7 +1431,7 @@ ontains the name of the current .c file.
 ### `__LINE__`
 the current line number in the file.
 
-## CondiTonal Compiling
+## Conditional Compiling
 All environments have at least one preprocessor symbol that is only defined in them.
 [Full List](hap://sourceforge.net/p/predef/wiki/OperaTngSystems/)
 
