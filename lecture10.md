@@ -2,19 +2,6 @@
 
 ## Network Programming
 
-`int socket(int domain, int type, int protocol)`
-
-## Operating System
-
-Signals
-
-https://vichargrave.github.io/articles/2013-02/tcp-ip-network-programming-design-patterns-in-cpp
-
-
-# Lecture 10
-
-## Network Programming
-
 ### Principles
 
 1. Get a socket id (int) with the `socket()` call
