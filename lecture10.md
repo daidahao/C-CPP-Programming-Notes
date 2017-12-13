@@ -257,7 +257,7 @@ SAME `stdin` / `cin`, `stdout` / `cout`, `stderr` / `cerr`
 
 - Child dies:
 
-parent receives SIGCHLD
+parent receives `SIGCHLD`
 
 - Parent dies:
 
