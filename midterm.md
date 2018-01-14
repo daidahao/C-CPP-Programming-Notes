@@ -107,8 +107,8 @@ Char array
 char my_text[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
 ```
 
-`'A'` One character
-`"A"` Two characters <-> `{'A', '\0'}`
+- `'A'` One character
+- `"A"` Two characters <-> `{'A', '\0'}`
 
 ## Functions are not nested
 All functions are at the same level.
@@ -119,7 +119,7 @@ The preprocessor simply replaces text. It looks for lines that start with a `#`,
 1. Compiler turns the code into an "object file".
 2. Linker adds the code of standard C functions and turns the program into an "executable" program.
 
-> A compiled language is faster and uses fewer resources.
+A compiled language is faster and uses fewer resources.
 
 `gcc log_sample.c –o log_sample -lm`
 
@@ -142,7 +142,7 @@ In C, integer values (char, short, int, long) are used instead of boolean data t
 
 > Curly brackets not mandatory when conditions applies to a single instruction.
 
-## Inequality
+### Inequality
 In the ASCII code, uppercase comes before lower case.
 
 ### Switch
@@ -187,10 +187,11 @@ for (initialization; condition; increment) {
   instructions
 }
 ```
-> In tradiJonal C, where usually all variables, even loop variables, are declared at the beginning of a function. Java behaviour is allowed in C99, which borrows it from Java.
+> In traditional C, where usually all variables, even loop variables, are declared at the beginning of a function. Java behaviour is allowed in C99, which borrows it from Java.
 
 ## Error management in C
 `int scanf(const char *restrict format, ...);`
+
 It returns the number of items assigned.
 
 ### Initialization
@@ -254,7 +255,7 @@ Three default "streams"
 3. stderr
 
 #### Unix (Linux) "pipe"
-`my_program1 | my_program2` Turn the output of one program into the input of another program.
+`my_program1 | my_program2` turns the output of one program into the input of another program.
 
 > Most "char" functions actually work with "int" (4-byte) variables that are truncated when assigned to a "char" (1-byte) variable.
 
@@ -267,9 +268,9 @@ fputc(c, stdout);
 ```
 
 #### fgets
-For reading lines of text, use fgets() that loads data into an array the maximum size of which is provided. fgets() also loads end-of-line characters.
+For reading lines of text, use `fgets()` that loads data into an array the maximum size of which is provided. `fgets()` also loads end-of-line characters.
 
-DON'T USE gets(). If you read more than what the array can store, you'll **corrupt memory**.
+DON'T USE `gets()`. If you read more than what the array can store, you'll **corrupt memory**.
 
 `char *fgets(char *str, int size, stdin)`
 
@@ -283,9 +284,11 @@ DON'T USE gets(). If you read more than what the array can store, you'll **corru
 
 `scanf(format, &var)`
 
-`printf(format, ...)` **stdout**
+`printf(format, ...)` -> `stdout`
 
 `fprintf(stream, format, ...)`
+
+`sscanf(*char buffer, *format, ...);`
 
 ### Classification of characters
 `#include <ctype.h>`
@@ -303,7 +306,7 @@ It contains functions (and macros) to test characters.
 
 `int toupper(int c);`
 
-> There isn't in standard C any funcJon to change the case of a full string (it's very easy to write).
+> There isn't in standard C any function to change the case of a full string (it's very easy to write).
 
 ### String manipulation
 
@@ -311,7 +314,9 @@ It contains functions (and macros) to test characters.
 #include <string.h>
 ```
 
-`int strlen(char *string);` Starts from the pointer passed and moves on, counting chars until one encounters \0.
+`int strlen(char *string);`
+
+Starts from the pointer passed and moves on, counting chars until one encounters `\0`.
 
 #### Unsafe basic copy/concat functions
 `char *strcpy (char *dest, char *src)`
@@ -322,7 +327,7 @@ Starts at dest and copies what starts at src until `\0` is met.
 
 Starts at dest and moves on until one encounters `\0`, then copies what starts at src until `\0` is met.
 
-**NO BOUNDARY CHECKING** Overflow. Possible memory corruption.
+**NO BOUNDARY CHECKING:** Overflow. Possible memory corruption.
 
 #### Limits to n characters at most
 `char *strncpy(char *string1, char *string2, int n)`
@@ -339,7 +344,7 @@ Starts at dest and moves on until one encounters `\0`, then copies what starts a
 - <0 is string1 comes alphabetically before string2
 - \>0 is the reverse is true
 
-> Both strcmp() and strncmp() are safe if strings are terminated with `\0`.
+> Both `strcmp()` and `strncmp()` are safe if strings are terminated with `\0`.
 
 **Ignore case**
 
@@ -360,7 +365,7 @@ Starts at dest and moves on until one encounters `\0`, then copies what starts a
 ## Chinese Characters
 `#include <wchar.h>`
 
-wchar_t is a type that extends char and handles multi-byte
+`wchar_t` is a type that extends char and handles multi-byte
 characters.
 
 wide char = character stored on several bytes
