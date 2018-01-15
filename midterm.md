@@ -874,7 +874,7 @@ char *initcap(char *input) {
 
 `void * malloc(size_t size);`
 
-Returns start address or NULL.
+Returns start address or `NULL`.
 
 `void * realloc(void *ptr, size_t size);`
 
@@ -893,9 +893,9 @@ p = NULL;
 When you free memory, you mustn't leave cleaning half done.
 
 
-#### `#include <string.h>`
+`#include <string.h>`
 
-`char*strdup(char*str);`
+`char *strdup(char *str);`
 
 #### `void *` = address of "something"
 - type unknown
@@ -991,12 +991,12 @@ STRUCT_T *strp = (STRUCT_T *)malloc(sizeof(STRUCT_T));
 
 4. Arrays are memory + pointer
 5. You can mix arrays and pointers
-6. You copy values on the stack when calling funcDons
+6. You copy values on the stack when calling functions
     - Simple variable
     - Full structure
     - Address (pointer, array)
 7. To modify a parameter, you need to pass its address
-> You can say that a pointer is "const" if the function doesn't modify it.
+> You can say that a pointer is `const` if the function doesn't modify it.
 
 `int printf(const char *fmt, ...)`
 
@@ -1005,6 +1005,8 @@ STRUCT_T *strp = (STRUCT_T *)malloc(sizeof(STRUCT_T));
 A function contains a call to itself (with other parameters).
 
 There will necessarily be a condition in the function to stop the recursion.
+
+**Don't use recursion where loops are easy to write.**
 
 ### Quick Sort
 Tony Hoare
@@ -1069,7 +1071,6 @@ void quicksort(int *arr, int elem_count) {
 }
 ```
 
-**Don't use recursion where loops are easy to write.**
 
 # Lecture 6
 
