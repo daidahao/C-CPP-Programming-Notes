@@ -632,7 +632,7 @@ In a `union`, all components are using the same storage in memory. **Reserved si
 
 ## FILES
 
-### Stream redirecEon
+### Stream redirection
 `$ my_program < input_file`
 
 `$ my_program > output_file`
@@ -641,7 +641,7 @@ In a `union`, all components are using the same storage in memory. **Reserved si
 
 `#include <stdio.h>`
 
-> A file pointer is a stream exactly like stdin or stdout. In fact, wherever you can use stdin or stdout, you can replace them with a file pointer.
+> A file pointer is a stream exactly like `stdin` or `stdout`. In fact, wherever you can use `stdin` or `stdout`, you can replace them with a file pointer.
 
 ```c
 FILE *fp;
@@ -667,7 +667,7 @@ else{
 
 `fputs(message, fp);`
 
-Returns EOF on error, otherwise > 0.
+Returns `EOF` on error, otherwise > 0.
 
 #### Writing/reading any type of file
 `c = fgetc(fp);`
@@ -756,7 +756,7 @@ clean: // make clean
   (TAB)  -rm *.o
   (TAB)  -rm *.a
 ```
-> The additional flag -L is for the linker only, and says to also look into the specified directory for libraries.
+> The additional flag `-L` is for the linker only, and says to also look into the specified directory for libraries.
 
 
 ### Shared Library
