@@ -1078,7 +1078,7 @@ void quicksort(int *arr, int elem_count) {
 
 `realloc()`
 
-- It looks like for a free, big enough memory area in the heap that can be assigned to you and reserves it.
+- It looks for a free, big enough memory area in the heap that can be assigned to you and reserves it.
 - It then uses the original pointer to copy what was at the old place to the new place, then it frees the old place before returning to your program the address of the new one.
 
 ### Sorting
