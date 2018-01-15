@@ -1,13 +1,5 @@
 # Lecture 13
 
-Threads: lightweight processes
-
-mutex
-
-mutual exclusion, basically a lock
-
-Nearest
-
 ## Object Oriented Databases
 
 Make database objects appear as programming language objects
