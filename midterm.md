@@ -388,7 +388,7 @@ Succeeded by GBK
 GB2312/GBK can encode close to 9,000 characters on two bytes.
 
 ### UTF-8
-In UTF-8 (most used on the web) 1 to four characters can be used. The first bit(s) of the first byte tells how many bytes compose the character. Continuation bytes always have the left-most bit set to 1.
+In UTF-8 (most used on the web) 1 to 4 characters can be used. The first bit(s) of the first byte tells how many bytes compose the character. Continuation bytes always have the left-most bit set to 1.
 
 - 1 byte for basic Latin
 - 2 bytes for Europe, Middle Ease
@@ -442,13 +442,14 @@ carriage return `\n` included in what `ctime()` returns
 int main() {
   time_t clock;
   clock = (time_t)0;
-  printf("%s", ctime(&clock));
+  printf("%s", ctime(& clock));
   return 0;
 }
 ```
 
 ### Struct tm
-Struct tm is defined in time.h and breaks up a date/time into its components..
+Struct `tm` is defined in `time.h` and breaks up a date/time into its components..
+
 ```c
 struct tm {
   int tm_sec;     /* seconds (0 - 60) */
@@ -464,24 +465,23 @@ struct tm {
   long tm_gmtoff; /* offset from UTC in seconds */
 };
 ```
-Two functions take a pointer to a time_t (number of seconds to 1/1/1970 at 00:00:00) and return a pointer to a struct tm.
+Two functions take a pointer to a `time_t` (number of seconds to 1/1/1970 at 00:00:00) and return a pointer to a struct `tm`.
 
 `struct tm *localtime(const time_t *clock);`
 
 `struct tm *gmtime(const time_t *clock);`
 
-\* Returns NULL if error.
+\* Returns `NULL` if error.
 
-Two functions take a pointer to a struct tm and return the corresponding number of seconds since 1/1/1970 at 00:00:00.
+Two functions take a pointer to a struct `tm` and return the corresponding number of seconds since 1/1/1970 at 00:00:00.
 
 `time_t  mktime(struct tm *timeptr);`
 
 `time_t  timegm(struct tm *timeptr);`
 
-\* Returns -1 if error.
+\* Returns `-1` if error.
 
 ## `random()`
-
 
 `#include <stdlib.h>`
 
@@ -509,9 +509,9 @@ Two functions take a pointer to a struct tm and return the corresponding number 
 
 `char *string_array[] = {"Welcome", "Bienvenidos", "Bienvenue", "Willkommen", "Bemvindos", NULL};`
 
-> If you let the compiler compute the size, you should have a NULL to know where the array stops when you loop.
+> If you let the compiler compute the size, you should have a `NULL` to know where the array stops when you loop.
 
-> Another method is to use function sizeof() to get the size of the array and divide by the size of one element, here a char *
+> Another method is to use function `sizeof()` to get the size of the array and divide by the size of one element, here a `char *`
 
 `char **string_array = {"Welcome", "Bienvenidos", "Bienvenue", "Willkommen", "Bemvindos", NULL};`
 
@@ -604,7 +604,7 @@ Some computers want everything to start at even addresses, so there may be "padd
 
 **Don't rely on pointer arithmetic to point to the various components of a structure.**
 
-### Dereferencing
+### Dereferencing `->`
 
 Use the "arrow notation" with a pointer to a structure.
 
@@ -626,7 +626,7 @@ union {
 } stuff;
 ```
 
-In a union, all components are using the same storage in memory. Reserved size is the size of the biggest.
+In a `union`, all components are using the same storage in memory. **Reserved size is the size of the biggest.**
 
 # Lecture 4
 
