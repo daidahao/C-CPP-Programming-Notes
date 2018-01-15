@@ -1424,7 +1424,7 @@ Macros can include blocks between curly brackets and be on several lines.
 
 ### Difference between macros and functions
 
-- Macros are just substituTon.
+- Macros are just substitution.
 - No call.
 - No copy of arguments.
 - Operating directly on variables.
@@ -1475,14 +1475,15 @@ Packaging your project is tougher. A tool named "autoscan" analyses the source f
 
 You must also manually prepare a "makefile.in" (for bigger projects you can have a top-level "Makefile.am").
 
-"autoconf" prepares "configure", and "configure" uses makefile.in to
-generate the final Makefile that will buid the program. Other tools such as automake can be used in the process. As you see, simplicity for the end-user is at the expense of complexity for the developer.
+"autoconf" prepares "configure", and "configure" uses makefile.in to generate the final Makefile that will buid the program. Other tools such as automake can be used in the process.
+
+As you see, simplicity for the end-user is at the expense of complexity for the developer.
 
 Other tools: Cmake
 
 ## Global Vriables
 
-Don't use extern variables. Truly global variables are evil.
+Don't use extern variables. **Truly global variables are evil.**
 
 In C, your static global variables should be limited to variables such as
 - global flags
