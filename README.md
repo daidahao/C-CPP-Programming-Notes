@@ -4,7 +4,7 @@ Notes for C/CPP Programming Course at SUSTech, 2017 Fall.
 
 ## Table of Contents
 
-- [Lecture Index (Official Version)]()
+- [Lecture Index (Official Version)](index.pdf)
 
 > Useful for exam, I guess.
 
