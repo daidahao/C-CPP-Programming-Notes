@@ -12,7 +12,7 @@ encapsulation
 - Method names start with lower case (except constructors / destructors)
 - Give special names to members
 
-NEVER start a name with two underscores
+NEVER start a name with two underscores (reserved for compiler vendors).
 
 ```c++
 // We can use "this", implicit pointer to the current object.
@@ -77,7 +77,7 @@ public:
 
 Because of arrays.
 
-As soon as you define a constructor, no default constructor will be created
+**As soon as you define a constructor, no default constructor will be created.**
 
 You cannot specify any parameter when you create an array of objects. You cannot initialize it like a C array of structures, because attributes are private.
 
@@ -143,7 +143,7 @@ You can redefine operators in C++
 C++ knows a lot of functions/methods named
 `operator<symbol>()` which can be used as such or simply as the symbol.
 
-`operator+()`
+- `operator+()`
 
 #### Method or Function?
 
@@ -154,7 +154,7 @@ Rule: **if the current object plays the lead part method, otherwise function**
 ```c++
 class T {
 public:
-  ostream &operator<<(ostream &os){
+  ostream& operator<<(ostream& os){
     // code here ...
     return os;
   }
@@ -165,7 +165,7 @@ public:
 `t.operator<<(cout)` is equal to `t << cout`
 
 - Not the way it is used
-- Also, not possible to add a method to ostream
+- Also, not possible to add a method to `ostream`
 
 **Function**
 
@@ -173,15 +173,15 @@ public:
 class YearToMonth {
 public:
   // Don't use a namespace in a header file
-  friend std::ostream &operator<<(std::ostream &os,
-                        const YearToMonth &ytm);
+  friend std::ostream& operator<<(std::ostream& os,
+                        const YearToMonth& ytm);
 };
 ```
 
-- `++` Method (affecting the current object)
-- `+` Friend function. Takes two objects, return a third one.
+- `++` **Method** (affecting the current object)
+- `+` **Friend function.** Takes two objects, return a third one.
 
-The assignment operator recommended by Coplien IS a method, because we are only dealing with objects of the class.
+The assignment operator recommended by Coplien **is a method**, because we are only dealing with objects of the class.
 
 Possibly a need for deleting, then recreating memory areas.
 
@@ -189,7 +189,7 @@ Possibly a need for deleting, then recreating memory areas.
 
 MOSTLY UNIX/LINUX
 
-`man <name>"` in console
+`$ man <name>"`
 
 Unix/Linux manual pages
 
@@ -200,7 +200,9 @@ Unix/Linux manual pages
 
 ## Network Programming
 
+The best part in this lecture! In case you miss it, here is the slide for this lecture.
 
+[Slides](lecture9/lecture9.pdf)
 
 
 
