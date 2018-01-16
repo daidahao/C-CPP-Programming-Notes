@@ -110,7 +110,7 @@ Bjarne Stroustrup (1950 - )
 
 > Stroustrup took many ideas from Simula, invented by two Norwegians who created all object-related concepts in the 1960s and became enormously influential.
 
-## PHILOSOPHY
+## C++ Philosophy
 
 - Anchored in reality
     - Solve actual problems
@@ -278,7 +278,7 @@ struct matrix {
 #endif
 ```
 
-When actually writing the function (in another file) **you must prefix the function name by the struct name** (spoiler: same thing with classes) because you can imagine different structure containing functions with identical names (eg "length()")
+When actually writing the function (in another file) **you must prefix the function name by the struct name** (spoiler: same thing with classes) because you can imagine different structure containing functions with identical names (eg `length()`)
 
 ```c++
 matrix *matrix::new_matrix(int r, int c) {
@@ -291,7 +291,7 @@ Turn a struct into a class
 ```c++
 #ifndef MATRICES_HPP
 #define MATRICES_HPP
-struct matrix {
+class matrix {
   short rows;
   short cols;
   double *cells;
@@ -312,11 +312,11 @@ Contrary to Java, the code of functions isn't usually supplied in the class defi
 
 Code is given in other files, and each function name is given as `<class name>::<function name>` as we have seen with the struct example.
 
-The class really is an **interface**, the specification of how you interact with the object. The source code may not be supplied in a legible form but only as a .o file.
+The class really is an **interface**, the specification of how you interact with the object. The source code may not be supplied in a legible form but only as a `.o` file.
 
 ### Vectors
 
-a built-in collection similar to a Java ArrayList
+a built-in collection similar to a Java `ArrayList`
 
 `#include <vector>`
 
@@ -327,13 +327,17 @@ a built-in collection similar to a Java ArrayList
 `my_list.size()`
 
 `my_list.push_back(e)`
+adds element at the end
+
+`my_list.pop_back()`
+deletes last element
 
 `my_list.insert(pos, e)`
 
 
 **No garbage collector in C++.**
 
-In Java, an object is always a reference (always created with new). Not in C++, where you can either declare an object or declare a pointer and allocate the object dynamically.
+In Java, an object is always a reference (always created with `new`). Not in C++, where you can either declare an object or declare a pointer and allocate the object dynamically.
 
 `ClassType object;`
 
