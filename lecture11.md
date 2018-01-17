@@ -212,6 +212,8 @@ Note that here `IPC_RMID` is the third parameter, the second one is a semaphore 
 
 ## POSIX threads
 
+For more details, see [Lecture 13](lecture13.md).
+
 Lght-weight processes that don't do the heavy lifting of `fork`/`exec`.
 
 - lightweight processes
