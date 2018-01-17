@@ -2,7 +2,7 @@
 
 A parent process is expected to wait for the completion of the child process.
 
-> The reason is that a process returns a status (the int return value) and that this status is supposed to be at least acknowledged by the parent process. As long as the status isn't acknowledged, the system cannot quite cleanup everything related to the completed process.
+> The reason is that a process returns a status (the `int` return value) and that this status is supposed to be at least acknowledged by the parent process. As long as the status isn't acknowledged, the system cannot quite cleanup everything related to the completed process.
 
 `wait()` function
 
@@ -24,7 +24,7 @@ A not-waited for process
 
 First the program clones itself. This provides a "shell".
 
-Then the child program calls the "exec()" function that loads and starts running the code for a completely different program.
+Then the child program calls the `exec()` function that loads and starts running the code for a completely different program.
 
 ```c
 int execl(const char *path, const char *arg0, ..., NULL);
@@ -103,7 +103,7 @@ key = ftok("/etc/supersoft.conf", 'q');
 msqid = msgget(key, 0666 | IPC_CREAT);
 ```
 
-a struct `msgbuf` must contain a long as first member, but the second member can be anything
+a struct `msgbuf` must contain a `long` as first member, but the second member can be anything
 
 ```c
 struct msgbuf {
@@ -148,13 +148,13 @@ shmid = shmget(key, 1024, 0644 | IPC_CREAT);
 data = shmat(shmid, (void *)0, 0);
 ```
 
-> You can pass a not NULL pointer if you want the shared memory to be mapped to a specific address. I have never found any use for this feature so far.
+> You can pass a not `NULL` pointer if you want the shared memory to be mapped to a specific address. I have never found any use for this feature so far.
 
 `(void)shmdt(data);`
 
 When you are done you unmap (detach) shared memory from your space.
 
-When all processes have detached with shmdt() from the shared memory area, the segment is still there.
+When all processes have detached with `shmdt()` from the shared memory area, the segment is still there.
 
 `shmctl(shmid, IPC_RMID, NULL);`
 
@@ -496,7 +496,7 @@ At the least, any unexpected exception should be thrown. Ideally, it should be *
 
 What if a thrown exception isn't caught, or is thrown from level to level without being processed? It's always caught at the `main()` level and causes program termination.
 
-The snag is how it is done, because the default function that terminates the program is a dirty, panicky quitting.
+The snag (问题) is how it is done, because the default function that terminates the program is a dirty, panicky quitting.
 
 `main()` calls `terminate()` to abort.
 
