@@ -4,16 +4,16 @@
 
 ### Principles
 
-1. Get a socket id (int) with the `socket()` call
+##### 1. Get a socket id (int) with the `socket()` call
 
 ```c
 include <sys/socket.h>
-int socket(int domain,      //AF_INET, AF_INET6, AF_UNSPEC
-            int type,       //SOCK_STREAM, SOCK_DGRAM
+int socket(int domain,      // AF_INET, AF_INET6, AF_UNSPEC
+            int type,       // SOCK_STREAM, SOCK_DGRAM
             int protocol);  // 0 - IP
 ```
 
-Some of this information is usually specified in a special structure for network addresses.
+Some of this information is usually specified in a special structure `addrinfo` for network addresses.
 
 ```c
 #include <netdb.h>
@@ -42,12 +42,12 @@ int socket(int domain,
             int protocol);
 ```
 
-2. Establish a connection using the `connect()` call
+##### 2. Establish a connection using the `connect()` call
 
 ```c
 include <sys/socket.h>
 int connect(int socket,
-            const strct sockaddr *address,
+            const struct sockaddr *address,
             socklen_t address_len);
 ```
 
@@ -71,9 +71,9 @@ int getaddrinfo(const char *hostname,
 void freeaddrinfo(struct addrinfo *ai);
 ```
 
-3. Call `send()` to send a message
-4. If an answer is expected, call `recv()` or `read()` to wait for it
-5. Call `close()` to end the connection
+##### 3. Call `send()` to send a message
+##### 4. If an answer is expected, call `recv()` or `read()` to wait for it
+##### 5. Call `close()` to end the connection
 
 ### What about writing a server?
 
@@ -153,7 +153,7 @@ int kill(pid_t pid, int sig);
 
 ![](lecture10/kill.png)
 
-> signal 0 is a dummy signal which isn't delivered to the "target", but allows the sender to know whether the process corresponding to the pid is up and running.
+> signal `0` is a dummy signal which isn't delivered to the "target", but allows the sender to know whether the process corresponding to the pid is up and running.
 
 #### Signal handler
 
@@ -255,13 +255,11 @@ The forked process will be identical in every respect, except for pid and parent
 
 SAME `stdin` / `cin`, `stdout` / `cout`, `stderr` / `cerr`
 
-- Child dies:
+#### Child dies:
+- parent receives `SIGCHLD`
 
-parent receives `SIGCHLD`
-
-- Parent dies:
-
-process #1 becomes foster parent
+#### Parent dies:
+- process #1 becomes foster parent
 
 A parent process is expected to wait for the completion of the child process.
 
