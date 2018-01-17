@@ -19,3 +19,11 @@ Notes for C/CPP Programming Course at SUSTech, 2017 Fall.
 - [Lecture 13](lecture13.md)
 
 ## PDF Versions
+
+- [Midterm - Lecture 1 - 7](pdf/midterm.pdf)
+- [Lecture 8](pdf/lecture8.pdf)
+- [Lecture 9](pdf/lecture9.pdf)
+- [Lecture 10](pdf/lecture10.pdf)
+- [Lecture 11](pdf/lecture11.pdf)
+- [Lecture 12](pdf/lecture12.pdf)
+- [Lecture 13](pdf/lecture13.pdf)
