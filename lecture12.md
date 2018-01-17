@@ -43,7 +43,7 @@ However, **overloading doesn't work with pointers**, and therefore arrays. The c
 
 #### Using preprocessor
 
-One way to work around this would be to **use the preprocessor** (using typedef would also be possible), have a generic "type", and substitute whatever you need.
+One way to work around this would be to **use the preprocessor** (using `typedef` would also be possible), have a generic "type", and substitute whatever you need.
 
 ```c++
 #define THINGY   float
@@ -57,7 +57,7 @@ float average(THINGY *arr, int n) {
 }
 ```
 
-**Problem**: if in the same code you need to average both an int and a float array.
+**Problem**: if in the same code you need to average both an `int` and a `float` array.
 
 #### Templates: Compiler with kind of preprocessor abilities
 
@@ -112,7 +112,7 @@ One limitation is that you need to work with references, and you cannot in Java 
 
 Templates no longer works, though, when types no longer match **exactly**.
 
-C usually doesn't scoff at passing a char where an int is expected; conversion is automatic. It won't work with a template though;
+C usually doesn't scoff at passing a `char` where an `int` is expected; conversion is automatic. It won't work with a template though;
 
 ```c++
 template <class T>
@@ -134,7 +134,7 @@ j = max(i, c);
 
 ### Generic tree, C-style
 
-> C can do it, as long as you remain at the byte level with addresses "in memory". You end up with void * and void ** pointers, the compiler has no way to check whether you aren't pointing at the right type, and if using an undefined byte address is a powerful tool it's not one to put in the hands of an inexperienced developer.
+> C can do it, as long as you remain at the byte level with addresses "in memory". You end up with `void *` and `void **` pointers, the compiler has no way to check whether you aren't pointing at the right type, and if using an undefined byte address is a powerful tool it's not one to put in the hands of an inexperienced developer.
 
 - Node is a pointer to the key of the node.
 - Cast to a double pointer to the data type stored in the tree.
