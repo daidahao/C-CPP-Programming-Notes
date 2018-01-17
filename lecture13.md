@@ -11,6 +11,7 @@ Extend the language with database features
 - data recovery
 - queries involving several objects etc.
 
+### Drawbacks
 - Remained a niche product
 - Relational vendors added (mostly unused) "object extensions"
 
@@ -93,13 +94,13 @@ You can pass an address of an array that contains one item per thread, who alloc
 ```c
 // Can also allocate dynamically
 pthread_t   threads[NUM_THREAD];
-  THREAD_DATA_T data[NUM_THREADS];
-  for (i = 0; i < NUM_THREADS; i++) {
-     // Set-up data[i]
-     rc = pthread_create(&(threads[i]),
-                         NULL,
-                         threadFunc,
-                         (void *)&(data[i]));
+THREAD_DATA_T data[NUM_THREADS];
+for (i = 0; i < NUM_THREADS; i++) {
+  // Set-up data[i]
+  rc = pthread_create(&(threads[i]),
+                        NULL,
+                        threadFunc,
+                        (void *)&(data[i]));
 }
 ```
 
@@ -214,6 +215,8 @@ pthread_cond_wait(&cond, &mx);
 // Do things
 pthread_mutex_unlock(&mx);
 ```
+
+`pthread_cond_wait()` atomically releases `mutex` and causes the calling thread to block on the condition variable `cond`. Upon successful return, the `mutex` has been locked and is owned by the calling thread.
 
 Thread one that modifies the variable sends (to all threads) a special signal when the condtition changes.
 
